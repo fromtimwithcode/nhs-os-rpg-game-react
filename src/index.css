@@ -1,0 +1,195 @@
+/* ============================================================================
+   DEMON SLAYER RPG - Tailwind CSS Configuration
+   ============================================================================
+   In Tailwind CSS v4, we configure custom themes directly in CSS using @theme.
+   This replaces the old tailwind.config.js file approach.
+   
+   We're adding:
+   - Custom colors for our RPG theme
+   - Custom animations for game effects
+   - Custom fonts for that retro RPG feel
+   ============================================================================ */
+
+/* Import Tailwind's base styles */
+@import "tailwindcss";
+
+/* ----------------------------------------------------------------------------
+   CUSTOM THEME - Extending Tailwind with our RPG colors and animations
+   ----------------------------------------------------------------------------
+   The @theme directive lets us add new values to Tailwind's design system.
+   After defining these, we can use them like any built-in Tailwind class!
+   
+   Example: After defining --color-blood, we can use bg-blood, text-blood, etc.
+   ---------------------------------------------------------------------------- */
+@theme {
+  /* ==========================================================================
+     CUSTOM COLORS
+     ==========================================================================
+     These colors create our dark, moody Demon Slayer atmosphere.
+     Use them with any Tailwind color utility: bg-blood, text-gold, border-demon, etc.
+  */
+  
+  /* Blood red theme colors */
+  --color-blood: #8B0000;
+  --color-blood-dark: #5C0000;
+  --color-blood-glow: #FF4444;
+  
+  /* Gold accent colors for UI elements */
+  --color-gold: #FFD700;
+  --color-gold-dark: #B8860B;
+  
+  /* Player health bar colors */
+  --color-health: #00FF88;
+  --color-health-dark: #004422;
+  
+  /* Demon/enemy colors */
+  --color-demon: #FF3333;
+  --color-demon-dark: #440000;
+  
+  /* Panel and background colors */
+  --color-panel: #1a1a2e;
+  --color-panel-light: #252545;
+  
+  /* ==========================================================================
+     CUSTOM FONTS
+     ==========================================================================
+     We define font families here so we can use font-pixel and font-medieval
+     as Tailwind classes throughout our app.
+  */
+  --font-pixel: "Press Start 2P", cursive;
+  --font-medieval: "MedievalSharp", cursive;
+  
+  /* ==========================================================================
+     CUSTOM ANIMATIONS
+     ==========================================================================
+     These keyframe animations bring our game to life!
+     Use them with: animate-float, animate-shake, animate-glow, etc.
+  */
+  
+  /* Floating animation - makes the demon bob up and down */
+  --animate-float: float 3s ease-in-out infinite;
+  
+  /* Screen shake - triggers when player takes damage */
+  --animate-shake: shake 0.5s ease-in-out;
+  
+  /* Glowing pulse - for important UI elements like the title */
+  --animate-glow: glow-pulse 2s ease-in-out infinite;
+  
+  /* Damage flash - red overlay when hit */
+  --animate-damage: damage-flash 0.3s ease-in-out;
+  
+  /* Fade in from below - for new elements appearing */
+  --animate-fade-in: fade-in-up 0.5s ease-out forwards;
+  
+  /* Breathing/idle animation - subtle scale effect */
+  --animate-breathe: breathe 2s ease-in-out infinite;
+  
+  /* Rising particles - for healing effects */
+  --animate-rise: particle-rise 3s ease-out infinite;
+}
+
+/* ============================================================================
+   KEYFRAME DEFINITIONS
+   ============================================================================
+   @keyframes define the actual animation sequences. Each keyframe specifies
+   what the element looks like at different points in the animation.
+   
+   0% = start of animation
+   50% = middle of animation  
+   100% = end of animation
+   ============================================================================ */
+
+/* Floating effect - gentle up and down motion */
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+/* Screen shake - rapid left/right movement */
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
+  20%, 40%, 60%, 80% { transform: translateX(5px); }
+}
+
+/* Glowing pulse - intensity fades in and out */
+@keyframes glow-pulse {
+  0%, 100% {
+    filter: drop-shadow(0 0 5px #FF4444);
+    text-shadow: 0 0 10px #8B0000, 0 0 20px #8B0000;
+  }
+  50% {
+    filter: drop-shadow(0 0 20px #FF4444) drop-shadow(0 0 40px #8B0000);
+    text-shadow: 0 0 20px #FF4444, 0 0 40px #8B0000, 0 0 60px #5C0000;
+  }
+}
+
+/* Damage flash - red overlay appears and fades */
+@keyframes damage-flash {
+  0%, 100% { 
+    background-color: transparent; 
+  }
+  50% { 
+    background-color: rgba(139, 0, 0, 0.4); 
+  }
+}
+
+/* Fade in from below - element rises while becoming visible */
+@keyframes fade-in-up {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Breathing effect - subtle scale pulsing */
+@keyframes breathe {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.02);
+  }
+}
+
+/* Particle rise - floats up and fades out */
+@keyframes particle-rise {
+  0% {
+    transform: translateY(0) scale(1);
+    opacity: 0.6;
+  }
+  100% {
+    transform: translateY(-60px) scale(0);
+    opacity: 0;
+  }
+}
+
+/* ============================================================================
+   BASE STYLES
+   ============================================================================
+   These apply default styling to HTML elements across the entire app.
+   We use Tailwind's @layer base to ensure proper CSS ordering.
+   ============================================================================ */
+@layer base {
+  /* Apply pixel font to the whole page */
+  body {
+    font-family: "Press Start 2P", cursive;
+    /* Prevent text selection for game-like feel */
+    user-select: none;
+    /* Smooth font rendering */
+    -webkit-font-smoothing: antialiased;
+  }
+  
+  /* Ensure buttons use our pixel font too */
+  button {
+    font-family: "Press Start 2P", cursive;
+  }
+}
